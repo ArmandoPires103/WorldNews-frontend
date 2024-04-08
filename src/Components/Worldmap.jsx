@@ -1,75 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+import React from 'react';
+import { useState } from 'react';
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Title Here</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
+const WorldMap = () => {
+    const [tooltip, setTooltip] = useState({ display: 'none', x: 0, y: 0, country: '', time: '', timezone: '' });
+    const getUser = async (place) => {
+        try {
+          const api_url = `https://timezone.abstractapi.com/v1/current_time/?api_key=YOUR_API_KEY&location=${place}`;
+          const response = await fetch(api_url);
+          const data = await response.json();
+          const time = data.datetime;
+          const timezone = data.timezone_abbreviation;
+          setTooltip({ display: 'block', x: tooltip.x, y: tooltip.y, country: place, time: time, timezone: timezone });
+        } catch (error) {
+          console.error('Error fetching user time:', error);
         }
+      };
+    
+      const handleMouseOver = (e) => {
+        const countryId = e.target.id;
+        const countryElements = document.querySelectorAll(`.${countryId}`);
+        countryElements.forEach(country => {
+          country.style.fill = 'pink';
+        });
+        setTooltip({
+          ...tooltip,
+          display: 'block',
+          country: countryId,
+          x: e.clientX + 10,
+          y: e.clientY - 60
+        });
+      };
+    
+      const handleMouseLeave = (e) => {
+        const countryId = e.target.id;
+        const countryElements = document.querySelectorAll(`.${countryId}`);
+        countryElements.forEach(country => {
+          country.style.fill = '#ececec';
+        });
+        setTooltip({ ...tooltip, display: 'none' });
+      };
+    
 
-        body {
-            overflow-x: hidden;
-            overflow-y: hidden;
-            background-color: rgb(39, 44, 67);
-        }
-
-        #name {
-            position: absolute;
-            background-color: rgb(255, 255, 255);
-            width: fit-content;
-            opacity: 0;
-            border-radius: 5px;
-            border: 3px solid rgb(245, 128, 128);
-            padding: 0px 5px;
-            font-size: 1.5rem;
-
-        }
-
-
-        #timeCont{
-            background-color: white;
-            width: fit-content;
-            font-size: 1.5rem;
-            padding: 5px 5px;
-            border-radius: 5px;
-            border: 3px solid rgb(245, 128, 128);        
-        }
+  return (
+    <div className="timeCont">
         
-
-        svg path {
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body id="body" class="background">
-    <div id="root"></div>
-
-    <div id="name">
-        <p id="namep">Name</p>
-    </div>
-
-    <div id="timeCont">
-        <p id="time">Time</p>
-    </div>
-
-    <script type="module" src="/src/main.jsx"></script>
-</body>
-
-</html>
-
-
-    <svg id="allSvg" baseprofile="tiny" fill="#ececec" stroke="black" stroke-linecap="round" stroke-linejoin="round"
-        version="1.2" viewbox="0 0 2000 857" xmlns="http://www.w3.org/2000/svg">
-        <path class="allPaths"
-            d="M1383 261.6l1.5 1.8-2.9 0.8-2.4 1.1-5.9 0.8-5.3 1.3-2.4 2.8 1.9 2.7 1.4 3.2-2 2.7 0.8 2.5-0.9 2.3-5.2-0.2 3.1 4.2-3.1 1.7-1.4 3.8 1.1 3.9-1.8 1.8-2.1-0.6-4 0.9-0.2 1.7-4.1 0-2.3 3.7 0.8 5.4-6.6 2.7-3.9-0.6-0.9 1.4-3.4-0.8-5.3 1-9.6-3.3 3.9-5.8-1.1-4.1-4.3-1.1-1.2-4.1-2.7-5.1 1.6-3.5-2.5-1 0.5-4.7 0.6-8 5.9 2.5 3.9-0.9 0.4-2.9 4-0.9 2.6-2-0.2-5.1 4.2-1.3 0.3-2.2 2.9 1.7 1.6 0.2 3 0 4.3 1.4 1.8 0.7 3.4-2 2.1 1.2 0.9-2.9 3.2 0.1 0.6-0.9-0.2-2.6 1.7-2.2 3.3 1.4-0.1 2 1.7 0.3 0.9 5.4 2.7 2.1 1.5-1.4 2.2-0.6 2.5-2.9 3.8 0.5 5.4 0z" 
-            id="Afghanistan">
-        </path>
+    
+    <svg
+      id="allSvg"
+      baseProfile="tiny"
+      fill="#ececec"
+      stroke="black"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      version="1.2"
+      viewBox="0 0 2000 857"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+    
+      <path
+        className="allPaths"
+        d="M1383 261.6l1.5 1.8-2.9 0.8-2.4 1.1-5.9 0.8-5.3 1.3-2.4 2.8 1.9 2.7 1.4 3.2-2 2.7 0.8 2.5-0.9 2.3-5.2-0.2 3.1 4.2-3.1 1.7-1.4 3.8 1.1 3.9-1.8 1.8-2.1-0.6-4 0.9-0.2 1.7-4.1 0-2.3 3.7 0.8 5.4-6.6 2.7-3.9-0.6-0.9 1.4-3.4-0.8-5.3 1-9.6-3.3 3.9-5.8-1.1-4.1-4.3-1.1-1.2-4.1-2.7-5.1 1.6-3.5-2.5-1 0.5-4.7 0.6-8 5.9 2.5 3.9-0.9 0.4-2.9 4-0.9 2.6-2-0.2-5.1 4.2-1.3 0.3-2.2 2.9 1.7 1.6 0.2 3 0 4.3 1.4 1.8 0.7 3.4-2 2.1 1.2 0.9-2.9 3.2 0.1 0.6-0.9-0.2-2.6 1.7-2.2 3.3 1.4-0.1 2 1.7 0.3 0.9 5.4 2.7 2.1 1.5-1.4 2.2-0.6 2.5-2.9 3.8 0.5 5.4 0z"
+        id="Afghanistan"
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => getUser('Afghanistan')}
+        ></path>
         <path class="allPaths" id="Angola"
             d="M 1121.2 572 1121.8 574 1121.1 577.1 1122 580.1 1121.1 582.5 1121.5 584.7 1109.8 584.6 1109 605.1 1112.6 610.3 1116.2 614.3 1105.8 616.9 1092.3 616 1088.5 613 1065.8 613.2 1065 613.7 1061.7 610.8 1058.1 610.6 1054.7 611.7 1052 612.9 1051.5 608.9 1052.4 603.2 1054.4 597.3 1054.7 594.6 1056.6 588.8 1058 586.2 1061.3 582 1063.2 579.1 1063.8 574.4 1063.5 570.7 1061.9 568.4 1060.4 564.5 1059.1 560.7 1059.4 559.3 1061.1 556.8 1059.5 550.6 1058.3 546.3 1055.5 542.2 1056.1 541 1058.4 540.1 1060.1 540.2 1062.1 539.5 1078.8 539.6 1080.1 544.3 1081.7 548.2 1083 550.3 1085.1 553.6 1088.9 553.1 1090.7 552.2 1093.8 553.1 1094.7 551.5 1096.2 547.8 1099.7 547.5 1100 546.4 1102.9 546.4 1102.4 548.7 1109.2 548.6 1109.3 552.7 1110.4 555.1 1109.5 559 1109.9 563 1111.7 565.4 1111.3 573 1112.7 572.4 1115.1 572.6 1118.6 571.6 1121.2 572 Z">
         </path>
@@ -153,6 +148,9 @@
         <path class="allPaths"
             d="M665.8 489.6l3.1 0.6 0.6-1.4-1-1.2 0.6-1.9 2.3 0.6 2.7-0.7 3.2 1.4 2.5 1.3 1.7-1.7 1.3 0.2 0.8 1.8 2.7-0.4 2.2-2.5 1.8-4.7 3.4-5.9 2-0.3 1.3 3.6 3 11.2 3.1 1.1 0.1 4.4-4.3 5.3 1.7 1.9 10.1 1 0.2 6.5 4.3-4.2 7.1 2.3 9.5 3.9 2.8 3.7-0.9 3.6 6.6-2 11 3.4 8.5-0.2 8.4 5.3 7.4 7.2 4.4 1.8 4.8 0.3 2.1 2 2 8.2 1.1 3.9-2.1 10.6-2.7 4.2-7.7 8.9-3.4 7.3-4 5.5-1.4 0.2-1.3 4.7 0.9 12-1.1 9.9-0.3 4.2-1.6 2.6-0.5 8.6-5.2 8.3-0.5 6.7-4.3 2.7-1.1 3.9-6 0-8.5 2.4-3.7 2.9-6 1.9-6.1 5.1-4.1 6.4-0.3 4.8 1.3 3.5-0.3 6.5-0.8 3.1-3.4 3.6-4.5 11.3-4 5-3.2 3.1-1.5 6.1-2.9 3.6-2.1-3.6 1.8-3.1-3.8-4.3-4.8-3.6-6.3-4.1-1.9 0.2-6.3-5-3.4 0.7 6-8.7 5.3-6.3 3.3-2.6 4.2-3.5-0.4-5.1-3.2-3.8-2.6 1.3 0.7-3.7 0.3-3.8-0.3-3.6-2.1-1.1-2 1-2.1-0.3-0.8-2.4-1.1-5.9-1.2-1.9-3.9-1.8-2.2 1.3-5.9-1.3-0.4-8.7-2-3.5 1.6-1.4-0.8-3.6 1.3-2.8 0.6-5.1-1.7-4-3.2-1.8-0.8-2.5 0.5-3.7-10.7-0.3-2.8-7.5 1.7-0.1-0.3-2.7-1.2-1.9-0.5-3.7-3.4-1.9-3.5 0-2.5-1.8-3.9-1.3-2.3-2.4-6.4-1.1-6.5-5.7 0.3-4.3-0.9-2.5 0.4-4.8-7.3 1.1-2.9 2.4-4.8 2.6-1.1 1.9-2.9 0.2-4.2-0.6-3.2 1.1-2.6-0.7-0.1-9.7-4.4 3.7-5-0.1-2.3-3.5-3.8-0.3 1-2.8-3.3-3.9-2.6-5.8 1.5-1.1-0.2-2.8 3.4-1.8-0.7-3.5 1.4-2.2 0.3-3 6.3-4.4 4.6-1.2 0.8-1 5.1 0.3 2.2-17.6 0.1-2.8-0.9-3.6-2.6-2.4 0.1-4.7 3.2-1 1.1 0.7 0.2-2.5-3.3-0.7 0-4 11 0.2 1.9-2.3 1.6 2.1 1 3.8 1.1-0.8 3.1 3.4 4.4-0.4 1.1-2 4.2-1.5 2.4-1.1 0.7-2.7 4.1-1.8-0.3-1.4-4.8-0.5-0.7-4.1 0.3-4.3-2.5-1.6 1.1-0.6 4.1 0.8 4.5 1.6 1.7-1.5 4.1-1 6.4-2.4 2.1-2.5-0.7-1.8 3-0.2 1.2 1.4-0.8 2.9 2 0.9 1.2 3-1.6 2.3-1 5.4 1.4 3.3 0.3 3 3.5 3 2.8 0.3 0.6-1.3 1.8-0.3 2.6-1.1 1.8-1.7 3.2 0.6 1.3-0.3z" 
             id="Brazil">
+                onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => getUser('Brazil')}
         </path>
         <path class="allPaths" d="M1633.1 472.8l2.2-2.4 4.6-3.6-0.1 3.2-0.1 4.1-2.7-0.2-1.1 2.2-2.8-3.3z" 
             id="Brunei Darussalam">
@@ -1076,10 +1074,6 @@
         <path class="allPaths" id="Cape Verde"
             d="M 846 391.4 846.3 391.5 846.3 391.7 846.6 392 846.4 392.4 845.8 392.7 845.4 393.1 844.7 393.2 844.7 393.1 844.7 392.6 844.5 392.4 844.5 392.2 844.7 392 844.9 392 845.1 391.8 845.8 391.4 846 391.4 Z">
         </path>
-        <path class="allPaths"
-            d="M599 424.5l-0.3 0-0.4-0.3-0.3-0.1-0.3-0.3-0.1-0.2-0.3-0.1-0.2-0.4-0.3-0.3 0.1-0.5 0.5 0.3 0.1 0.5 0.4 0.4 0.7 0.2 0.2 0.3 0.3 0.4-0.1 0.1z" 
-            id="Curaçao">
-        </path>
         <path class="allPaths" id="Cayman Islands"
             d="M 532.7 377.8 533 377.9 533.2 377.5 533.6 377.6 534.1 377.6 534.2 377.8 534 378 533.8 377.9 533.4 378 533.2 378.1 532.5 378.1 532.7 377.8 Z">
         </path>
@@ -1592,70 +1586,11 @@
         </circle>
         <circle cx="1798.2" cy="719.3" id="2">
         </circle>
+      {/* Add more path elements as needed */}
     </svg>
+    </div>
+  );
+};
 
-</body>
 
-<script>
-    async function getUser(place) {
-            const api_url = `https://timezone.abstractapi.com/v1/current_time/?api_key=YOUR_API_KEY&location=${place}`
-            
-            const response = await fetch(api_url);
-            
-            const data = await response.json();
-            
-            time = await data.datetime
-            // arr = Array.from(time)
-            // arr.splice(0, 11)
-            // arr.toString()
-            // timezone = (arr.splice(0, 5)).join("");
-            document.getElementById("time").innerText = `${place}'s time = ${time} ${data.timezone_abbreviation}`
-
-    }
-
-    document.querySelectorAll(".allPaths").forEach(e => {
-        e.setAttribute('class', `allPaths ${e.id}`);
-        e.addEventListener("mouseover", function () {
-            window.onmousemove=function (j) {
-                x = j.clientX
-                y = j.clientY
-                document.getElementById('name').style.top = y-60  + 'px'
-                document.getElementById('name').style.left = x +10 + 'px'
-            }
-            const classes=e.className.baseVal.replace(/ /g, '.')         
-            document.querySelectorAll(`.${classes}`).forEach(country =>{
-                country.style.fill = "pink"
-            })
-            document.getElementById("name").style.opacity = 1
-            
-            document.getElementById("namep").innerText = e.id
-        })
-        e.addEventListener("mouseleave", function () {
-            const classes=e.className.baseVal.replace(/ /g, '.')
-            document.querySelectorAll(`.${classes}`).forEach(country =>{
-                country.style.fill = "#ececec"
-            })
-            document.getElementById("name").style.opacity = 0
-        })
-
-        e.addEventListener("click",function(){
-            getUser(e.id)
-        })
-
-    })
-
-    // document.getElementById("searchBtn").addEventListener("click", function () {
-    //     country = document.getElementById("search").value
-    //     document.querySelectorAll(`.allPaths`).forEach(e => {
-    //         e.style.fill = "#ececec"
-    //     })
-    //     document.querySelectorAll(`#${country}`).forEach(e => {
-    //         e.style.fill = "red"
-    //     })
-    // })
-
-</script>
-
-</html>
-</body>
-</html>
+export default WorldMap;
