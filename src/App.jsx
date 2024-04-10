@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-// import WorldMap from "./Components/Worldmap";
+import WorldMap from "./Components/Worldmap";
 
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Register from "./Components/Register";
@@ -39,6 +39,10 @@ function App() {
           path="/register"
           element={<Register setToggleLogin={setToggleLogin} />}
           />
+          <Route
+          path="/map"
+          element={<WorldMap/>}
+          />
 
         <Route element={<ProtectedRoute />}>
           {/* Place protected routes here */}
@@ -46,9 +50,9 @@ function App() {
             path="/dashboard"
             element={<Dashboard handleLogout={handleLogout} />}
             />
+         
         </Route>
       </Routes>
-      {/* <WorldMap/> */}
     </>
   );
 }

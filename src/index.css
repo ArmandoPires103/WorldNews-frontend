@@ -33,3 +33,7 @@ svg path {
   cursor: pointer;
 }
 
+.allPaths:hover {
+  fill: pink; /* Change fill color on hover */
+  cursor: pointer; /* Show pointer cursor on hover */
+}
