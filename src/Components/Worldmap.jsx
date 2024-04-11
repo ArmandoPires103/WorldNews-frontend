@@ -1579,7 +1579,7 @@ const WorldMap = () => {
     </svg>
         {/* Render country information if available */}
         {countryInfo && (
-                <div>
+                <div className='container'>
                     <h2>{countryInfo.country}</h2>
                     <p>Landmarks: {countryInfo.landmarks}</p>
                     <p>Cities: {countryInfo.cities}</p>
@@ -1587,7 +1587,7 @@ const WorldMap = () => {
             )}
         {/* Display country resources */}
         {countryResources.articles && countryResources.articles.map((article, index) => (
-                <div key={index}>
+                <div className='hover-info' key={index}>
                     <h3>{article.title}</h3>
                     <p>Author: {article.author}</p>
                     {/* You can display other article information similarly */}

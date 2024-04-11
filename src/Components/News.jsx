@@ -4,6 +4,7 @@ const News = () => {
     const API = import.meta.env.VITE_BASE_URL;
     const [countryNews, setCountryNews] = useState(null);
     
+    
     useEffect(() => {
         const fetchCountryData = async () => {
             try {
@@ -23,7 +24,7 @@ const News = () => {
 
     return (
         <div>
-            {/* Render countryNews data */}
+            
         </div>
     );
 };

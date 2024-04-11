@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import "./NavBar.css"
 import { Link } from "react-router-dom";
 
 const URL = import.meta.env.VITE_BASE_URL;
@@ -29,7 +29,7 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
 
   return (
     <div className="navbar-container">
-      <h1>Navbar Component</h1>
+      <h1 className="title">Navbar Component</h1>
       <h2>
         <Link style={{ textDecoration: "none" }} to="/">
           Your image or Logo (click here to go to Landing Page)

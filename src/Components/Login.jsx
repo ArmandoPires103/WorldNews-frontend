@@ -63,21 +63,13 @@ const Login = ({ setToggleLogin }) => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Login Component</h1>
+      <h1>Login</h1>
       <br />
       <h2>
         Use the DemoUser button to login and save time during your presentation
       </h2>
       <button onClick={handleDemoSignIn}>Demo User</button>
-      <br />
-      <br />
-      <br />
-
-      <h3> Remove the 'br' tags and these instructions if you use this code</h3>
-
-      <br />
-      <br />
-      <br />
+      
       <h3>Below is the regular login form which should be functional</h3>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">
