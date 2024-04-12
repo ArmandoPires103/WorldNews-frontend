@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const WorldMap = () => {
     const API = import.meta.env.VITE_BASE_URL;
     const [countryInfo, setCountryInfo] = useState(null);
     const [countryResources, setCountryResources] = useState([])
+    const navigate = useNavigate
     
     const handleClick = async (e) => {
         const countryId = e.target.id;
@@ -21,6 +23,7 @@ const WorldMap = () => {
             }
             const countryNewsData =await countryNews.json()
             console.log(countryNewsData)
+
             setCountryInfo(countryData);
             setCountryResources(countryNewsData)
 
@@ -28,6 +31,48 @@ const WorldMap = () => {
             console.error('Error fetching country information:', error);
         }
     };
+    
+   
+        const [url, setUrl] = useState('');
+        const [description, setDescription] = useState('');
+        const [articleId, setArticleId] = useState([])
+      
+        const submitFavorite = async (favUrl) => {
+          try {
+            const newFavorite = { url: favUrl, description: description };
+            console.log(newFavorite)
+            // const response = await 
+            
+            fetch('http://localhost:3003/news/favorites', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(newFavorite)
+        
+            }).then(res => res.json()).then(data => console.log(data))
+            
+            // if (!response.ok) {
+            //   throw new Error('Failed to add favorite');
+            // }
+            alert('Favorite added successfully!');
+            setUrl('');
+            setDescription('');
+            setArticleId(data)
+            
+          } catch (error) {
+            console.error('Error adding favorite:', error.message);
+            alert('Failed to add favorite. Please try again.');
+          }
+        };
+      
+        const handleAddFavorite = (article) => {
+            setUrl(article.url);
+            setDescription('');
+            submitFavorite(article.url);
+        };
+        // navigate('/form');
+        
     
 
   return (
@@ -1579,7 +1624,7 @@ const WorldMap = () => {
     </svg>
         {/* Render country information if available */}
         {countryInfo && (
-                <div className='container'>
+                <div className='country-info-box'>
                     <h2>{countryInfo.country}</h2>
                     <p>Landmarks: {countryInfo.landmarks}</p>
                     <p>Cities: {countryInfo.cities}</p>
@@ -1587,13 +1632,38 @@ const WorldMap = () => {
             )}
         {/* Display country resources */}
         {countryResources.articles && countryResources.articles.map((article, index) => (
-                <div className='hover-info' key={index}>
+                <div className='country-info-box' key={index}>
                     <h3>{article.title}</h3>
                     <p>Author: {article.author}</p>
                     {/* You can display other article information similarly */}
                     <a href={article.url} target="_blank" rel="noopener noreferrer">Read More</a>
+                    <button onClick={() => handleAddFavorite(article)}>Add to Favorites</button>
+                    
                 </div>
             ))}
+     <form onSubmit={submitFavorite}>
+        <div>
+          <label htmlFor="url">URL:</label>
+          <input
+            type="text"
+            id="url"
+            value={url}
+            onChange={(event) => setUrl(event.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            required
+          />
+        </div>
+        {/* <button onClick={() => handleAddFavorite(article)}>Add to Favorites</button> */}
+      </form>
     </div>
   );
 };

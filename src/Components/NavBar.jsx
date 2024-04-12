@@ -28,26 +28,30 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
   }, [toggleLogin]);
 
   return (
-    <div className="navbar-container">
-      <h1 className="title">Navbar Component</h1>
-      <h2>
+    <div className="nav__content">
         <Link style={{ textDecoration: "none" }} to="/">
-          Your image or Logo (click here to go to Landing Page)
+      <h1 className="logo">GlobalEcho</h1>
+          
         </Link>
-      </h2>
-
+        <label htmlFor="check" className="checkbox">
+        <i className="ri-menu-line"></i>
+      </label>
+      <input type="checkbox" name="check" id="check" />
+      <ul>
+        <Link to={"/map"}>Map</Link>
+        <Link to={"/favorites"}>Favorites</Link>
       {!toggleLogin ? (
-        <Link to={"/login"}>
-          <span>Login</span>
-        </Link>
+        <Link to={"/login"}>Login</Link>
       ) : (
         <div>
           {user && <span>Hello, {user.username.toUpperCase()}? | </span>}
           <Link onClick={handleLogout}>
             <span>Logout</span>
           </Link>
+        
         </div>
       )}
+      </ul>
       <hr />
     </div>
   );

@@ -8,6 +8,7 @@ import Login from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
+import ArticleFavorites from "./Components/ArticleFavorites";
 
 function App() {
   const navigate = useNavigate();
@@ -42,6 +43,10 @@ function App() {
           <Route
           path="/map"
           element={<WorldMap/>}
+          />
+          <Route
+          path="/favorites"
+          element={<ArticleFavorites/>}
           />
 
         <Route element={<ProtectedRoute />}>

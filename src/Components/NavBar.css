@@ -16,3 +16,38 @@
     color: white;
     user-select: none;
 } */
+.nav__content {
+  /* max-width: var(--max-width); */
+  margin: auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--primary-color-light);
+}
+.logo {
+    color: black;
+}
+
+nav .logo a {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color:black;
+  transition: 0.3s;
+}
+nav .logo a:hover {
+  color: black;
+}
+
+nav .checkbox {
+  display: none;
+}
+
+nav input {
+  display: none;
+}
+nav .checkbox i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}

@@ -35,7 +35,7 @@ const Login = ({ setToggleLogin }) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         await setToggleLogin(true);
-        navigate("/dashboard");
+        navigate("/map");
       } else {
         console.log("JWT Login Failed");
       }

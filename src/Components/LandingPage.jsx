@@ -1,17 +1,50 @@
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function LandingPage() {
+
+const LandingPage = () => {
   return (
-    <div style={{ textAlign: "center", marginTop: 100 }}>
-      <h1>This is Your Landing Page</h1>
-
-      <h3>
-        Dashboard is a protected component. If you are not logged in and you try
-        to navigate to the component you will be sent to the Login Page. Try It!
-      </h3>
-      <Link to="/dashboard">Dashboard</Link>
-    </div>
+    <html lang="en">
+      <head>
+        <meta charSet="UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css"
+          rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" href="./src/index.css" />
+        <title>TutorLink Website</title>
+      </head>
+      <body>
+        <nav>
+        </nav>
+        <section className="section">
+          <div className="section__container">
+            <div className="content">
+              <p className="subtitle">HELLO</p>
+              <h1 className="title">
+                <span>Welcome<br />To World News</span>
+              </h1>
+              <p className="description">
+              GlobeEcho delivers real-time updates on global events, providing users with concise and comprehensive coverage of world news. Stay informed with breaking headlines and insightful analysis, all in one convenient platform.
+              </p>
+              <div className="action__btns">
+              <Link to="/map">
+                <button className="hire__me">World Map</button>
+              </Link>
+              </div>
+            </div>
+            <div className="image">
+              <img src="https://res.cloudinary.com/dhexjuuzd/image/upload/v1712883874/worldwide-global-map-outline-black-background_1017-46153_hnt7fl.avif" alt="profile" />
+            </div>
+          </div>
+        </section>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+      </body>
+    </html>
   );
-}
+};
 
 export default LandingPage;
