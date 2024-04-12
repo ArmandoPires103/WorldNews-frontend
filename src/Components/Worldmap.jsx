@@ -67,7 +67,7 @@ const WorldMap = () => {
         };
       
         const handleAddFavorite = (article) => {
-            setUrl(article.url);
+            // setUrl(article.url);
             setDescription('');
             submitFavorite(article.url);
         };
@@ -1641,29 +1641,6 @@ const WorldMap = () => {
                     
                 </div>
             ))}
-     <form onSubmit={submitFavorite}>
-        <div>
-          <label htmlFor="url">URL:</label>
-          <input
-            type="text"
-            id="url"
-            value={url}
-            onChange={(event) => setUrl(event.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-            required
-          />
-        </div>
-        {/* <button onClick={() => handleAddFavorite(article)}>Add to Favorites</button> */}
-      </form>
     </div>
   );
 };
