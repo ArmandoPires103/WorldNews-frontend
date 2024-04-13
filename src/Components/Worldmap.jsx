@@ -7,6 +7,9 @@ const WorldMap = () => {
     const [countryInfo, setCountryInfo] = useState(null);
     const [countryResources, setCountryResources] = useState([])
     const [isOpen, setIsOpen] = useState(false)
+    const [url, setUrl] = useState('');
+    const [description, setDescription] = useState('');
+    const [articleId, setArticleId] = useState([])
     
     
     const handleClick = async (e) => {
@@ -34,12 +37,7 @@ const WorldMap = () => {
         }
     };
     
-   
-        const [url, setUrl] = useState('');
-        const [description, setDescription] = useState('');
-        const [articleId, setArticleId] = useState([])
-      
-        const submitFavorite = async (favUrl) => {
+    const submitFavorite = async (favUrl) => {
           try {
             const newFavorite = { url: favUrl, description: description };
             console.log(newFavorite)
@@ -76,7 +74,13 @@ const WorldMap = () => {
         // navigate('/form');
         
     
-
+        const handleOpenModal = () => {
+            setIsOpen(true);
+          };
+        
+          const handleCloseModal = () => {
+            setIsOpen(false);
+          };
   return (
     <div className="timeCont">
         

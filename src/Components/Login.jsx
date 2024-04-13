@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "../Components/Login.css"
 
 const URL = import.meta.env.VITE_BASE_URL;
 
@@ -62,16 +63,14 @@ const Login = ({ setToggleLogin }) => {
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="login-body">
+    <div className="wrapper">
       <h1>Login</h1>
       <br />
-      <h2>
-        Use the DemoUser button to login and save time during your presentation
-      </h2>
-      <button onClick={handleDemoSignIn}>Demo User</button>
-      
-      <h3>Below is the regular login form which should be functional</h3>
+      <button onClick={handleDemoSignIn} class="btn">Demo User</button>
+      <br />
       <form onSubmit={handleSubmit}>
+        <div className="input-box">
         <label htmlFor="username">
           <input
             id="username"
@@ -82,7 +81,9 @@ const Login = ({ setToggleLogin }) => {
             onChange={handleChange}
           />
         </label>
-
+        </div>
+        <br />
+        <div className="input-box">
         <label htmlFor="password">
           <input
             id="password"
@@ -93,11 +94,17 @@ const Login = ({ setToggleLogin }) => {
             autoComplete="current-password"
           />
         </label>
-        <button>Submit</button>
+        </div>
+        <br />
+        <button type="submit" class="btn">Submit</button>
       </form>
+      <br />
+      <div className="register-link">
       <p>
         No Account? <Link to="/register">Register</Link>
       </p>
+      </div>
+    </div>
     </div>
   );
 };
