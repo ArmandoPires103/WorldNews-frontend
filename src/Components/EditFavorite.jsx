@@ -36,8 +36,6 @@ const EditFavorite = ({favorite}) => {
             if (!res.ok) {
                 throw new Error('Failed to delete favorite');
             }
-            // Optionally, you can handle the deletion in the UI after successful deletion
-            // For example, remove the deleted favorite from the state or re-fetch the favorites list
         })
         .catch((error) => console.error('Error deleting favorite:', error));
     };

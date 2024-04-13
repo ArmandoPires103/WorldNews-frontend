@@ -28,32 +28,26 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
   }, [toggleLogin]);
 
   return (
-    <div className="nav__content">
-        <Link style={{ textDecoration: "none" }} to="/">
-      <h1 className="logo">GlobalEcho</h1>
-          
-        </Link>
-        <label htmlFor="check" className="checkbox">
+<nav className="nav__content">
+      <div className="logo"><Link to="/">GlobalEcho</Link></div>
+      <label htmlFor="check" className="checkbox">
         <i className="ri-menu-line"></i>
       </label>
       <input type="checkbox" name="check" id="check" />
       <ul>
-        <Link to={"/map"}>Map</Link>
-        <Link to={"/favorites"}>Favorites</Link>
-      {!toggleLogin ? (
-        <Link to={"/login"}>Login</Link>
-      ) : (
-        <div>
-          {user && <span>Hello, {user.username.toUpperCase()}? | </span>}
-          <Link onClick={handleLogout}>
-            <span>Logout</span>
-          </Link>
-        
-        </div>
-      )}
+        <li><Link to="/map">Map</Link></li>
+        <li><Link to="/favorites">Favorites</Link></li>
+        { !user ? (
+          <li>
+            <Link to="/login">Log In</Link>
+          </li>
+        ) : (
+          <li>
+            <Link to="/login">Log Out</Link>
+          </li>
+        )}
       </ul>
-      <hr />
-    </div>
+    </nav>
   );
 };
 

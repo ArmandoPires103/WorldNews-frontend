@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import Modal from './Modal';
 
 const WorldMap = () => {
     const API = import.meta.env.VITE_BASE_URL;
     const [countryInfo, setCountryInfo] = useState(null);
     const [countryResources, setCountryResources] = useState([])
-    const navigate = useNavigate
+    const [isOpen, setIsOpen] = useState(false)
+    
     
     const handleClick = async (e) => {
         const countryId = e.target.id;
@@ -26,6 +27,7 @@ const WorldMap = () => {
 
             setCountryInfo(countryData);
             setCountryResources(countryNewsData)
+            setIsOpen(true)
 
         } catch (error) {
             console.error('Error fetching country information:', error);
@@ -68,7 +70,7 @@ const WorldMap = () => {
       
         const handleAddFavorite = (article) => {
             // setUrl(article.url);
-            setDescription('');
+            // setDescription('');
             submitFavorite(article.url);
         };
         // navigate('/form');
@@ -1623,6 +1625,7 @@ const WorldMap = () => {
       {/* Add more path elements as needed */}
     </svg>
         {/* Render country information if available */}
+        {/* <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}> */}
         {countryInfo && (
                 <div className='country-info-box'>
                     <h2>{countryInfo.country}</h2>
@@ -1641,6 +1644,7 @@ const WorldMap = () => {
                     
                 </div>
             ))}
+        {/* </Modal> */}
     </div>
   );
 };

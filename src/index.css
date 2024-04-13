@@ -19,6 +19,10 @@ svg path {
   cursor: pointer; 
 }
 
+.timeCont{
+  margin-top: 20px;
+}
+
 /* #country-info-box {
   display: none;
   position: absolute;
@@ -38,7 +42,7 @@ svg path {
 
 :root {
   --primary-color: #121114;
-  --primary-color-light: #f4f1f6;
+  --primary-color-light: #040404;
   --primary-color-dark: #eeeaf1;
   --secondary-color: #ca8a04;
   --text-dark: #f8f9fa;
