@@ -1,0 +1,20 @@
+.new-app {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10%;
+    margin: 30px;
+}
+.favorite-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10%;
+    margin: 30px;
+}
+
+.favorite-card h3 {
+    margin-top: 0;
+}
+
+.favorite-card p {
+    margin-bottom: 0;
+}

@@ -69,7 +69,7 @@ const WorldMap = () => {
         const handleAddFavorite = (article) => {
             // setUrl(article.url);
             // setDescription('');
-            submitFavorite(article.url);
+            submitFavorite(article.url, article.title);
         };
         // navigate('/form');
         
@@ -1640,6 +1640,7 @@ const WorldMap = () => {
         {/* Display country resources */}
         {countryResources.articles && countryResources.articles.map((article, index) => (
                 <div className='country-info-box' key={index}>
+                    <img className='news-img' src={article.urlToImage}/>
                     <h3>{article.title}</h3>
                     <p>Author: {article.author}</p>
                     {/* You can display other article information similarly */}
