@@ -41,7 +41,6 @@ const WorldMap = () => {
           try {
             const newFavorite = { url: favUrl, description: description };
             console.log(newFavorite)
-            // const response = await 
             
             fetch('http://localhost:3003/news/favorites', {
               method: 'POST',
@@ -52,9 +51,6 @@ const WorldMap = () => {
         
             }).then(res => res.json()).then(data => console.log(data))
             
-            // if (!response.ok) {
-            //   throw new Error('Failed to add favorite');
-            // }
             alert('Favorite added successfully!');
             setUrl('');
             setDescription('');
@@ -72,12 +68,6 @@ const WorldMap = () => {
             submitFavorite(article.url, article.title);
         };
         // navigate('/form');
-        
-    
-        const handleOpenModal = () => {
-            setIsOpen(true);
-          };
-        
           const handleCloseModal = () => {
             setIsOpen(false);
           };
@@ -101,8 +91,6 @@ const WorldMap = () => {
         className="allPaths"
         d="M1383 261.6l1.5 1.8-2.9 0.8-2.4 1.1-5.9 0.8-5.3 1.3-2.4 2.8 1.9 2.7 1.4 3.2-2 2.7 0.8 2.5-0.9 2.3-5.2-0.2 3.1 4.2-3.1 1.7-1.4 3.8 1.1 3.9-1.8 1.8-2.1-0.6-4 0.9-0.2 1.7-4.1 0-2.3 3.7 0.8 5.4-6.6 2.7-3.9-0.6-0.9 1.4-3.4-0.8-5.3 1-9.6-3.3 3.9-5.8-1.1-4.1-4.3-1.1-1.2-4.1-2.7-5.1 1.6-3.5-2.5-1 0.5-4.7 0.6-8 5.9 2.5 3.9-0.9 0.4-2.9 4-0.9 2.6-2-0.2-5.1 4.2-1.3 0.3-2.2 2.9 1.7 1.6 0.2 3 0 4.3 1.4 1.8 0.7 3.4-2 2.1 1.2 0.9-2.9 3.2 0.1 0.6-0.9-0.2-2.6 1.7-2.2 3.3 1.4-0.1 2 1.7 0.3 0.9 5.4 2.7 2.1 1.5-1.4 2.2-0.6 2.5-2.9 3.8 0.5 5.4 0z"
         id="Afghanistan"
-        // onMouseOver={handleMouseOver}
-        // onMouseLeave={handleMouseLeave}
         onClick={() => {
             
         }}
@@ -1630,26 +1618,27 @@ const WorldMap = () => {
     </svg>
         {/* Render country information if available */}
         {/* <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}> */}
-        {countryInfo && (
+        {/* {countryInfo && (
                 <div className='country-info-box'>
                     <h2>{countryInfo.country}</h2>
                     <p>Landmarks: {countryInfo.landmarks}</p>
                     <p>Cities: {countryInfo.cities}</p>
                 </div>
-            )}
+            )} */}
         {/* Display country resources */}
-        {countryResources.articles && countryResources.articles.map((article, index) => (
-                <div className='country-info-box' key={index}>
-                    <img className='news-img' src={article.urlToImage}/>
-                    <h3>{article.title}</h3>
-                    <p>Author: {article.author}</p>
+        {/* {countryResources.articles && countryResources.articles.map((article, index) => ( */}
+                {/* <div className='country-info-box' key={index}>
+                    <img className='news-img' src={article.urlToImage}/> */}
+                    {/* <h3>{article.title}</h3>
+                    <p>Author: {article.author}</p> */}
                     {/* You can display other article information similarly */}
-                    <a href={article.url} target="_blank" rel="noopener noreferrer">Read More</a>
-                    <button onClick={() => handleAddFavorite(article)}>Add to Favorites</button>
+                    {/* <a href={article.url} target="_blank" rel="noopener noreferrer">Read More</a> */}
+                    {/* <button onClick={() => handleAddFavorite(article)}>Add to Favorites</button> */}
                     
-                </div>
-            ))}
-        {/* </Modal> */}
+                {/* </div> */}
+            {/* ))} */}
+         {/* Modal */}
+      <Modal isOpen={isOpen} onClose={handleCloseModal} countryInfo={countryInfo} countryResources={countryResources} />
     </div>
   );
 };

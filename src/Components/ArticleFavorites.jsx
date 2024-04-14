@@ -19,9 +19,9 @@ const ArticleFavorites = () => {
             });
     }, []);
     return (
-        <div>
+        <div className='container'>
             <h2>Favorite Articles</h2>
-            <div  className='news-app'>
+            <div>
                 {favorites && favorites.map((favorite, index) => (
                     <div key={favorite.id} className='favorite-card'>
                         <h3><a href={favorite.url}>Article</a></h3>
