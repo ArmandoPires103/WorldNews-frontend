@@ -23,7 +23,6 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
           alert('Favorite added successfully!');
           setUrl('');
           setDescription('');
-          setArticleId(data)
           
         } catch (error) {
           console.error('Error adding favorite:', error.message);
@@ -31,16 +30,14 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
         }
       };
     
-      const handleAddFavorite = (article) => {
-          // setUrl(article.url);
-          // setDescription('');
+    const handleAddFavorite = (article) => {
           submitFavorite(article.url, article.title);
       };
-      // navigate('/form');
     const handleCloseModal = () => {
-        onClose(); // Call onClose function passed from parent component to close the modal
+        onClose(); 
       };
       if (!isOpen) return null;
+      
   return (
     <div className={`modal ${isOpen ? 'show' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
       <div className="modal-dialog">
