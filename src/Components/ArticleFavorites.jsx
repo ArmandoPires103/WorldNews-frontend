@@ -6,7 +6,6 @@ const ArticleFavorites = () => {
     const API = import.meta.env.VITE_BASE_URL;
     const [favorites, setFavorites] = useState([]);
     
-
     useEffect(() => {
         fetch(`${API}/news/favorites`)
             .then((res) => res.json())
@@ -18,14 +17,15 @@ const ArticleFavorites = () => {
                 console.error('Error fetching favorites:', error);
             });
     }, []);
+   
     return (
         <div className='container'>
             <h2>Favorite Articles</h2>
             <div>
                 {favorites && favorites.map((favorite, index) => (
                     <div key={favorite.id} className='favorite-card'>
-                        <h3><a href={favorite.url}>Article</a></h3>
-                        <h3>{favorite.title}</h3>
+                        <h3><a href={favorite.url}>{favorite.title}</a></h3>
+                        <img src={favorite.url_to_image} alt={favorite.urlToImage} />
                         <p>Memo: {favorite.description}</p>
                         <EditFavorite favorite = {favorite}/>
                     </div>

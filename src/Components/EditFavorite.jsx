@@ -8,6 +8,7 @@ const EditFavorite = ({favorite}) => {
         url: favorite.url,
         user_id: favorite.user_id,
         title: favorite.title,
+        urlToImage: favorite.urlToImage,
         id: favorite.id
     });
 
@@ -47,7 +48,7 @@ const EditFavorite = ({favorite}) => {
 
   return (
     <div>
-        <form onSubmit={() => handleUpdateDescription(favorite.id, favorite.title, event)}>
+        <form onSubmit={() => handleUpdateDescription(favorite.id, favorite.title, favorite.urlToImage, event)}>
             <textarea
             value={updatedFavorite.description}
             onChange={(e) => setUpdatedFavorite({...updatedFavorite, description: e.target.value})}
