@@ -25,6 +25,7 @@ const ArticleFavorites = () => {
                 {favorites && favorites.map((favorite, index) => (
                     <div key={favorite.id} className='favorite-card'>
                         <h3><a href={favorite.url}>Article</a></h3>
+                        <h3>{favorite.title}</h3>
                         <p>Memo: {favorite.description}</p>
                         <EditFavorite favorite = {favorite}/>
                     </div>

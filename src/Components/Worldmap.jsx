@@ -7,8 +7,6 @@ const WorldMap = () => {
     const [countryInfo, setCountryInfo] = useState(null);
     const [countryResources, setCountryResources] = useState([])
     const [isOpen, setIsOpen] = useState(false)
-    const [articleId, setArticleId] = useState([])
-    
     
     const handleClick = async (e) => {
         const countryId = e.target.id;
@@ -35,40 +33,9 @@ const WorldMap = () => {
         }
     };
     
-    const submitFavorite = async (favUrl) => {
-          try {
-            const newFavorite = { url: favUrl, description: description };
-            console.log(newFavorite)
-            
-            fetch('http://localhost:3003/news/favorites', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(newFavorite)
-        
-            }).then(res => res.json()).then(data => console.log(data))
-            
-            alert('Favorite added successfully!');
-            setUrl('');
-            setDescription('');
-            setArticleId(data)
-            
-          } catch (error) {
-            console.error('Error adding favorite:', error.message);
-            alert('Failed to add favorite. Please try again.');
-          }
+    const handleCloseModal = () => {
+        setIsOpen(false);
         };
-      
-        const handleAddFavorite = (article) => {
-            // setUrl(article.url);
-            // setDescription('');
-            submitFavorite(article.url, article.title);
-        };
-        // navigate('/form');
-          const handleCloseModal = () => {
-            setIsOpen(false);
-          };
   
 return (
     <div className="timeCont">

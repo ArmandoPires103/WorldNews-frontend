@@ -6,9 +6,9 @@ import { useState } from 'react';
 const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
-    const submitFavorite = async (favUrl) => {
+    const submitFavorite = async (favUrl, favTitle) => {
         try {
-          const newFavorite = { url: favUrl, description: description };
+          const newFavorite = { url: favUrl, title: favTitle, description: description };
           console.log(newFavorite)
           
           fetch('http://localhost:3003/news/favorites', {
