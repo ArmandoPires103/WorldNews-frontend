@@ -8,7 +8,7 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
     const [description, setDescription] = useState('');
     const submitFavorite = async (favUrl, favTitle, favUrlToImage) => {
         try {
-          const newFavorite = { url: favUrl, title: favTitle, urlToImage: favUrlToImage, description: description };
+          const newFavorite = { url: favUrl, title: favTitle, url_to_Image: favUrlToImage, description: description };
           console.log(newFavorite)
           
           fetch('http://localhost:3003/news/favorites', {

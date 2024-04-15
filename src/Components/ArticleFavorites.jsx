@@ -20,19 +20,27 @@ const ArticleFavorites = () => {
    
     return (
         <div className='container'>
-            <h2>Favorite Articles</h2>
-            <div>
-                {favorites && favorites.map((favorite, index) => (
-                    <div key={favorite.id} className='favorite-card'>
-                        <h3><a href={favorite.url}>{favorite.title}</a></h3>
-                        <img src={favorite.url_to_image} alt={favorite.urlToImage} />
-                        <p>Memo: {favorite.description}</p>
-                        <EditFavorite favorite = {favorite}/>
-                    </div>
-                ))}
+            <div className='card'>
+                <h2 className='header__card'>Favorite Articles</h2>
+                <div className='card__body grid-container'>
+                    {favorites && favorites.map((favorite, index) => (
+                        <div key={favorite.id} className='favorite-card'>
+                            <div className='card'>
+                                <h3><a href={favorite.url}>{favorite.title}</a></h3>
+                                <div className='card__header'>
+                                    <img src={favorite.url_to_image} alt={favorite.urlToImage} className="card__image" width="600"/>
+                                </div>
+                                <p>Memo: {favorite.description}</p>
+                                <EditFavorite favorite={favorite}/>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
+    
+    
 };
 
 export default ArticleFavorites;
