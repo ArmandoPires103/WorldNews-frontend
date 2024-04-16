@@ -49,6 +49,7 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
             {countryInfo && (
               <div className='country-info-box'>
                 <h2>{countryInfo.country}</h2>
+                <br />
                 <p>Landmarks: {countryInfo.landmarks}</p>
                 <p>Cities: {countryInfo.cities}</p>
               </div>
@@ -57,11 +58,12 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
             {countryResources.articles && countryResources.articles.map((article, index) => (
               <div className='country-info-box' key={index}>
                 {article.urlToImage &&<img className='news-img' src={article.urlToImage} alt="News Image" />}
+                <br />
                 <h3>{article.title}</h3>
                 <h4>Author: {article.author}</h4>
                 {/* You can display other article information similarly */}
-                <a href={article.url} target="_blank" rel="noopener noreferrer">Read More</a>
-                <button  onClick={() => handleAddFavorite(article)}>Add to Favorites</button>
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className="read-more-link">Read More</a>
+                <button onClick={() => handleAddFavorite(article)} className="add-to-favorites-button">Add to Favorites</button>
               </div>
             ))}
           </div>
