@@ -59,7 +59,7 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
               <div className='country-info-box' key={index}>
                 {article.urlToImage &&<img className='news-img' src={article.urlToImage} alt="News Image" />}
                 <br />
-                <h3>{article.title}</h3>
+                <h3>Title: {article.title}</h3>
                 <h4>Author: {article.author}</h4>
                 {/* You can display other article information similarly */}
                 <a href={article.url} target="_blank" rel="noopener noreferrer" className="read-more-link">Read More</a>

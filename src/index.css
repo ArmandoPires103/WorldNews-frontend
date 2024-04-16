@@ -270,3 +270,17 @@ ul li a:hover {
   justify-content: right;
   padding-bottom: 1rem;
 }
+.edit-button {
+  background-color: var(--primary-color);
+  font-size: 0.6rem; /* Adjusted font size */
+  font-weight: 600;
+  letter-spacing: 4px; /* Adjusted letter spacing */
+  padding: 0.3rem 0.6rem; /* Adjusted padding */
+  outline: none;
+  border: 4px solid var(--primary-color);
+  border-radius: 8px; /* Smaller border radius */
+  transition: 0.3s;
+  cursor: pointer;
+  color: #ffffff;
+  max-width: 90%;
+}

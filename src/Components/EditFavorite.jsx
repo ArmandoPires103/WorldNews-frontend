@@ -56,21 +56,24 @@ const EditFavorite = ({ favorite, onUpdate, onDelete }) => {
     };
 
     return (
-        <div>
-            <button onClick={() => setDisplayForm(!displayForm)}>Edit</button>
-            {displayForm && (
-                <form onSubmit={handleUpdateDescription}>
-                    <textarea
-                        name="description"
-                        value={updatedFavorite.description}
-                        onChange={handleInputChange}
-                        placeholder="Enter new description"
-                    />
-                    <input type="submit" value='Save' className='btn'/>
-                    <button onClick={handleDelete}>Delete</button>
-                </form>
-            )}
-        </div>
+<div>
+    <button className="edit-button" onClick={() => setDisplayForm(!displayForm)}>Edit</button>
+    {displayForm && (
+        <form onSubmit={handleUpdateDescription}>
+            <textarea
+                name="description"
+                value={updatedFavorite.description}
+                onChange={handleInputChange}
+                placeholder="Enter new description"
+            />
+            <input type="submit" value='Save' className='edit-button'/>
+            <br />
+            <br />
+            <button className="edit-button" onClick={handleDelete}>Delete</button>
+        </form>
+    )}
+</div>
+
     );
 }
 
