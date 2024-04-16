@@ -17,24 +17,37 @@ const ArticleFavorites = () => {
                 console.error('Error fetching favorites:', error);
             });
     }, []);
+
+    const handleUpdateFavorite = (updatedFavorite) => {
+        // Update the favorite in the state
+        setFavorites(prevFavorites => prevFavorites.map(favorite => 
+            favorite.id === updatedFavorite.id ? updatedFavorite : favorite
+        ));
+    };
+
+    const handleDeleteFavorite = (deletedFavoriteId) => {
+        // Remove the deleted favorite from the state
+        setFavorites(prevFavorites => prevFavorites.filter(favorite => favorite.id !== deletedFavoriteId));
+    };
    
     return (
         <div className='card'>
-         <h2 className='header__card'>Favorite Articles</h2>
+            <h2 className='header__card'>Favorite Articles</h2>
             <div className='card__body grid-container'>
-            {favorites && favorites.map((favorite, index) => (
-                <div key={favorite.id} className='favorite-card'>
-                <h3 className='card__title'><a href={favorite.url}>{favorite.title}</a></h3>
-                 <div className='card__header'>
-                 <img src={favorite.url_to_image} alt={favorite.urlToImage} className="card__image" width="600"/>
-                </div>
-                                <p>Memo: {favorite.description}</p>
-                                <EditFavorite favorite={favorite}/>
-                            </div>
-                    ))}
-                </div>
+                {favorites && favorites.map((favorite, index) => (
+                    <div key={favorite.id} className='favorite-card'>
+                        <h3 className='card__title'><a href={favorite.url}>{favorite.title}</a></h3>
+                        <div className='card__header'>
+                            <img src={favorite.url_to_image} alt={favorite.urlToImage} className="card__image" width="600"/>
+                        </div>
+                        <p>Memo: {favorite.description}</p>
+                        <EditFavorite favorite={favorite} onUpdate={handleUpdateFavorite} onDelete={handleDeleteFavorite}/>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
 
 export default ArticleFavorites;
+

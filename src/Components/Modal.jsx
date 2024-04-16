@@ -56,7 +56,7 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
             {/* Display country resources */}
             {countryResources.articles && countryResources.articles.map((article, index) => (
               <div className='country-info-box' key={index}>
-                <img className='news-img' src={article.urlToImage} alt="News Image" />
+                {article.urlToImage &&<img className='news-img' src={article.urlToImage} alt="News Image" />}
                 <h3>{article.title}</h3>
                 <h4>Author: {article.author}</h4>
                 {/* You can display other article information similarly */}
