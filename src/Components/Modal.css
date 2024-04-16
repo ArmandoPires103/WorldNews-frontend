@@ -25,7 +25,7 @@
 }
 
 .modal-header {
-  padding: 10px 20px;
+  padding: 20px 20px;
   background-color: #f5f5f5;
   display: flex;
   justify-content: space-between;
@@ -38,7 +38,7 @@
 }
 
 .modal-body {
-  padding: 50px;
+  padding: 20px;
 }
 
 .modal-footer {
@@ -51,4 +51,15 @@
   height: 300px; 
   text-align: center;
   border-radius: 1.5rem;/* Maintain the aspect ratio of the image */
+}
+.modal-title{
+  text-align: center;
+}
+
+.modal-body{
+  text-align: center;
+}
+
+.modal-body p{
+  color: red;
 }

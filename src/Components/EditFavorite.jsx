@@ -67,7 +67,7 @@ const EditFavorite = ({ favorite }) => {
                     onChange={(e) => setUpdatedFavorite({...updatedFavorite, description: e.target.value})}
                     placeholder="Enter new description"
                 />
-                <input type="submit" value='Edit'/>
+                <input type="submit" value='Edit' className='btn'/>
                 <button onClick={(event) => handleDelete(favorite.id, event)}>Delete</button>
             </form>
         </div>
