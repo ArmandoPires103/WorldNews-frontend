@@ -6,10 +6,9 @@ import { useState } from 'react';
 const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
-    const submitFavorite = async (favUrl, favTitle, favUrlToImage) => {
+    const submitFavorite = async (url, title, url_to_image) => {
         try {
-          const newFavorite = { url: favUrl, title: favTitle, url_to_Image: favUrlToImage, description: description };
-          console.log(newFavorite)
+          const newFavorite = { url, title, url_to_image, description };
           
           fetch('http://localhost:3003/news/favorites', {
             method: 'POST',
@@ -18,7 +17,7 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
             },
             body: JSON.stringify(newFavorite)
       
-          }).then(res => res.json()).then(data => console.log(data))
+          })
           
           alert('Favorite added successfully!');
           setUrl('');

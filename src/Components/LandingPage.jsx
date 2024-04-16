@@ -22,9 +22,9 @@ const LandingPage = () => {
         <section className="section">
           <div className="section__container">
             <div className="content">
-              <p className="subtitle">HELLO</p>
+              <p className="subtitle"></p>
               <h1 className="title">
-                <span>Welcome<br />To World News</span>
+                <span>Welcome<br />To Global Echo</span>
               </h1>
               <p className="description">
               GlobeEcho delivers real-time updates on global events, providing users with concise and comprehensive coverage of world news. Stay informed with breaking headlines and insightful analysis, all in one convenient platform.

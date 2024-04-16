@@ -1,20 +1,27 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 
-const EditFavorite = ({favorite}) => {
+const EditFavorite = ({ favorite }) => {
     const API = import.meta.env.VITE_BASE_URL;
     const [updatedFavorite, setUpdatedFavorite] = useState({
         description: favorite.description,
         url: favorite.url,
         user_id: favorite.user_id,
         title: favorite.title,
-        urlToImage: favorite.urlToImage,
+        url_to_image: favorite.url_to_image,
         id: favorite.id
     });
 
-    const handleUpdateDescription = (favoriteId, event) => {
-        event.preventDefault()
-        fetch(`${API}/news/favorites/${favoriteId}`, {
+    // useEffect to update the description when the component mounts or when the favorite prop changes
+    useEffect(() => {
+        setUpdatedFavorite({
+            ...updatedFavorite,
+            description: favorite.description
+        });
+    }, [favorite]); // Dependency array to watch for changes in the favorite prop
+
+    const handleUpdateDescription = (event) => {
+        event.preventDefault();
+        fetch(`${API}/news/favorites/${favorite.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,10 +32,19 @@ const EditFavorite = ({favorite}) => {
             if (!res.ok) {
                 throw new Error('Failed to update description');
             }
+            // Update UI state immediately
+            setUpdatedFavorite(updatedFavorite);
+            window.location.reload();
         })
         .catch((error) => console.error('Error updating description:', error));
     };
-
+    
+    useEffect(() => {
+        setUpdatedFavorite({
+            ...updatedFavorite,
+            description: favorite.description
+        });
+    }, [favorite]); // Dependency array to watch for changes in the favorite prop
     const handleDelete = (favoriteId, event) => {
         event.preventDefault()
         fetch(`${API}/news/favorites/${favoriteId}`, {
@@ -38,27 +54,24 @@ const EditFavorite = ({favorite}) => {
             if (!res.ok) {
                 throw new Error('Failed to delete favorite');
             }
-            // Optionally, you can handle the deletion in the UI after successful deletion
-            // For example, remove the deleted favorite from the state or re-fetch the favorites list
+            window.location.reload();
         })
         .catch((error) => console.error('Error deleting favorite:', error));
     };
-    
 
-
-  return (
-    <div>
-        <form onSubmit={() => handleUpdateDescription(favorite.id, favorite.title, event)}>
-            <textarea
-            value={updatedFavorite.description}
-            onChange={(e) => setUpdatedFavorite({...updatedFavorite, description: e.target.value})}
-            placeholder="Enter new description">
-            </textarea>
-            <input type="submit" value='Edit'/>
-            <button onClick={(event) => handleDelete(favorite.id, event)}>Delete</button>
-        </form>
-    </div>
-  )
+    return (
+        <div>
+            <form onSubmit={handleUpdateDescription}>
+                <textarea
+                    value={updatedFavorite.description}
+                    onChange={(e) => setUpdatedFavorite({...updatedFavorite, description: e.target.value})}
+                    placeholder="Enter new description"
+                />
+                <input type="submit" value='Edit'/>
+                <button onClick={(event) => handleDelete(favorite.id, event)}>Delete</button>
+            </form>
+        </div>
+    );
 }
 
-export default EditFavorite
+export default EditFavorite;

@@ -39,8 +39,6 @@ const ArticleFavorites = () => {
             </div>
         </div>
     );
-    
-    
 };
 
 export default ArticleFavorites;
