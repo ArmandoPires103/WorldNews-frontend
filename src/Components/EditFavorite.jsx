@@ -68,7 +68,6 @@ const EditFavorite = ({ favorite, onUpdate, onDelete }) => {
             />
             <input type="submit" value='Save' className='edit-button'/>
             <br />
-            <br />
             <button className="edit-button" onClick={handleDelete}>Delete</button>
         </form>
     )}

@@ -63,7 +63,8 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
                 <h4>Author: {article.author}</h4>
                 {/* You can display other article information similarly */}
                 <a href={article.url} target="_blank" rel="noopener noreferrer" className="read-more-link">Read More</a>
-                <button onClick={() => handleAddFavorite(article)} className="add-to-favorites-button">Add to Favorites</button>
+                <br />
+                <button onClick={() => handleAddFavorite(article)} className="edit-button">Add to Favorites</button>
               </div>
             ))}
           </div>
