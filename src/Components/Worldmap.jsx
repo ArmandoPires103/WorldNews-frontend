@@ -8,30 +8,48 @@ const WorldMap = () => {
     const [countryResources, setCountryResources] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     
-    const handleClick = async (e) => {
-        const countryId = e.target.id;
-        try {
-            const response = await fetch(`${API}/news/countries/${countryId}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch country information');
-            }
-            const countryData = await response.json();
-            console.log(countryData)
-            const countryNews = await fetch(`${API}/news?country=${countryData.country.toLowerCase().slice(0,2)}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch country information');
-            }
-            const countryNewsData =await countryNews.json()
-            console.log(countryNewsData)
+// Define a function called handleClick that takes an event.
+const handleClick = async (e) => {
+    // Extract the id of the clicked element (presumably representing a country)
+    const countryId = e.target.id;
 
-            setCountryInfo(countryData);
-            setCountryResources(countryNewsData)
-            setIsOpen(true)
+    try {
+        // Try to fetch country information using the countryId
+        const response = await fetch(`${API}/news/countries/${countryId}`);
 
-        } catch (error) {
-            console.error('Error fetching country information:', error);
+        // If the response is not okay (e.g., status code is not in the 200s range), throw an error
+        if (!response.ok) {
+            throw new Error('Failed to fetch country information');
         }
-    };
+
+        // If the response is okay, parse the response body as JSON
+        const countryData = await response.json();
+        console.log(countryData);
+
+        // Fetch news related to the country using its name (assuming it's available in the countryData)
+        const countryNews = await fetch(`${API}/news?country=${countryData.country.toLowerCase().slice(0,2)}`);
+
+        // If the response for fetching news is not okay, throw an error
+        if (!countryNews.ok) {
+            throw new Error('Failed to fetch country news');
+        }
+
+        // If the response is okay, parse the response body as JSON
+        const countryNewsData = await countryNews.json();
+        console.log(countryNewsData);
+
+        // Update state variables with the fetched country information and news
+        setCountryInfo(countryData);
+        setCountryResources(countryNewsData);
+
+        // Set a flag to indicate that the modal or some other component should be open to display the fetched data
+        setIsOpen(true);
+    } catch (error) {
+        // If any error occurs during the process, log the error
+        console.error('Error fetching country information:', error);
+    }
+};
+
     
     const handleCloseModal = () => {
         setIsOpen(false);

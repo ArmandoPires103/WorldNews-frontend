@@ -6,6 +6,7 @@ import { useState } from 'react';
 const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
+    
     const submitFavorite = async (url, title, url_to_image) => {
         try {
           const newFavorite = { url, title, url_to_image, description };
