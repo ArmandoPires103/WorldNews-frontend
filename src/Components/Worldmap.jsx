@@ -10,7 +10,7 @@ const WorldMap = () => {
     
 // Define a function called handleClick that takes an event.
 const handleClick = async (e) => {
-    // Extract the id of the clicked element (presumably representing a country)
+    // Extract the id of the clicked element (country)
     const countryId = e.target.id;
 
     try {
