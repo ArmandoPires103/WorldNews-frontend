@@ -4,6 +4,7 @@ import "../Components/Modal.css"
 import { useState } from 'react';
 
 const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
+  const API = import.meta.env.VITE_BASE_URL;
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
     
@@ -11,7 +12,7 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
         try {
           const newFavorite = { url, title, url_to_image, description };
           
-          fetch('http://localhost:3003/news/favorites', {
+          fetch(`${API}/news/favorites`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
