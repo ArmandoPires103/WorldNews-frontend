@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import WorldMap from "./Components/Worldmap";
+import GlobeCanvas from "./Components/Globe"; // Import the Globe component
 
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Register from "./Components/Register";
@@ -13,6 +14,7 @@ import ArticleFavorites from "./Components/ArticleFavorites";
 function App() {
   const navigate = useNavigate();
   const [toggleLogin, setToggleLogin] = useState(false);
+  const [is3DView, setIs3DView] = useState(false); // State to manage the view
 
   async function handleLogout() {
     localStorage.removeItem("token");
@@ -22,40 +24,46 @@ function App() {
     navigate("/login");
   }
 
+  const handleViewSwitch = () => {
+    setIs3DView((prev) => !prev); // Toggle between 2D and 3D view
+  };
+
   return (
     <>
       <NavBar
         handleLogout={handleLogout}
         toggleLogin={toggleLogin}
         setToggleLogin={setToggleLogin}
-        />
-
+      />
+      <button onClick={handleViewSwitch} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>
+        Switch to {is3DView ? "2D" : "3D"} View
+      </button> {/* Button to switch views */}
+      
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route
           path="/login"
           element={<Login setToggleLogin={setToggleLogin} />}
-          />
+        />
         <Route
           path="/register"
           element={<Register setToggleLogin={setToggleLogin} />}
-          />
-          <Route
+        />
+        <Route
           path="/map"
-          element={<WorldMap/>}
-          />
-          <Route
+          element={is3DView ? <GlobeCanvas /> : <WorldMap />} // Conditional rendering based on state
+        />
+        <Route
           path="/favorites"
-          element={<ArticleFavorites/>}
-          />
+          element={<ArticleFavorites />}
+        />
 
         <Route element={<ProtectedRoute />}>
           {/* Place protected routes here */}
           <Route
             path="/dashboard"
             element={<Dashboard handleLogout={handleLogout} />}
-            />
-         
+          />
         </Route>
       </Routes>
     </>
@@ -63,3 +71,5 @@ function App() {
 }
 
 export default App;
+
+
