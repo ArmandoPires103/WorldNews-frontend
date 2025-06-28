@@ -1,65 +1,149 @@
-/* Modal Styles */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
-  left: 50%; /* Center horizontally */
-  top: 50%; /* Center vertically */
-  transform: translate(-50%, -50%); /* Center the modal */
-  width: 50%; /* Adjust width as needed */
-  max-width: 600px; /* Example max-width */
-  height: auto; /* Adjust height as needed */
-  max-height: 80%; /* Example max-height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+/* Modal Styles - Duolingo Theme */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; 
-  padding-bottom: 20px;/* Could be more or less, depending on screen size */
+.modal-container {
+  background-color: white;
+  border-radius: 1rem;
+  max-width: 42rem;
+  width: 100%;
+  margin: 1rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .modal-header {
-  padding: 20px 20px;
-  background-color: #f5f5f5;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  padding: 1rem;
 }
 
-.close-btn {
+.modal-close-btn {
+  color: #9ca3af;
   background: transparent;
   border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
-.modal-body {
-  padding: 20px;
+.modal-close-btn:hover {
+  color: #4b5563;
+  background-color: #f3f4f6;
 }
 
-.modal-footer {
-  padding: 10px;
-  background-color: #f5f5f5;
+.modal-title-section {
+  text-align: center;
+  padding: 0 1.5rem 1rem;
+}
+
+.modal-country-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #059669;
+  margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.modal-content {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.news-article {
+  background-color: #f9fafb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
 }
 
 .news-img {
-  max-width: 100%; /* Ensure the image doesn't exceed the width of its container */
-  height: 300px; 
-  text-align: center;
-  border-radius: 1.5rem;
-}
-.modal-title{
-  text-align: center;
-}
-
-.modal-body{
-  text-align: center;
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.modal-body p{
-  color: red;
+.news-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #111827;
+  line-height: 1.25;
+}
+
+.news-description {
+  color: #374151;
+  margin-bottom: 1rem;
+  line-height: 1.625;
+}
+
+.news-author {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.news-button {
+  display: inline-block;
+  background-color: #10b981;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  font-size: 1.125rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.news-button:hover {
+  background-color: #059669;
+  transform: scale(1.05);
+  color: white;
+  text-decoration: none;
+}
+
+.no-articles {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.no-articles-icon {
+  font-size: 3.75rem;
+  margin-bottom: 1rem;
+}
+
+.no-articles-text {
+  color: #6b7280;
+  font-size: 1.125rem;
+  font-weight: 500;
 }
