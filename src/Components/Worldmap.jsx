@@ -8,47 +8,80 @@ const WorldMap = () => {
     const [countryResources, setCountryResources] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     
-// Define a function called handleClick that takes an event.
-const handleClick = async (e) => {
-    // Extract the id of the clicked element (country)
-    const countryId = e.target.id;
+    const countryIdMap = {
+        '1': { code: 'us', name: 'United States' },
+        '5': { code: 'ca', name: 'Canada' },
+        '3': { code: 'mx', name: 'Mexico' },
+        '4': { code: 'br', name: 'Brazil' },
+        '2': { code: 'ru', name: 'Russia' },
+        '6': { code: 'cn', name: 'China' },
+        '7': { code: 'in', name: 'India' },
+        '8': { code: 'au', name: 'Australia' },
+        '9': { code: 'za', name: 'South Africa' },
+        '10': { code: 'eg', name: 'Egypt' },
+        '11': { code: 'ng', name: 'Nigeria' },
+        '12': { code: 'ke', name: 'Kenya' },
+        '13': { code: 'ma', name: 'Morocco' },
+        '14': { code: 'dz', name: 'Algeria' },
+        '15': { code: 'ly', name: 'Libya' },
+        '16': { code: 've', name: 'Sudan' },
+        '17': { code: 'et', name: 'Ethiopia' },
+        '18': { code: 'so', name: 'Somalia' },
+        '19': { code: 'tz', name: 'Tanzania' },
+        '20': { code: 'mz', name: 'Mozambique' },
+        // Add more mappings as needed for your specific SVG map
+        // You'll need to map each numeric ID to the corresponding country
+    };
+    
+    // Define a function called handleClick that takes an event.
+    const handleClick = async (e) => {
+        // Extract the id of the clicked element (country)
+        const countryId = e.target.id;
+        console.log('Clicked country ID:', countryId);
 
-    try {
-        // Try to fetch country information using the countryId
-        const response = await fetch(`${API}/news/countries/${countryId}`);
+        try {
+            // Get country info from mapping
+            const countryData = countryIdMap[countryId];
+            
+            if (!countryData) {
+                console.error('No country data found for ID:', countryId);
+                return;
+            }
 
-        // If the response is not okay (e.g., status code is not in the 200s range), throw an error
-        if (!response.ok) {
-            throw new Error('Failed to fetch country information');
+            const countryCode = countryData.code;
+            const countryName = countryData.name;
+            
+            console.log('Using country code for news:', countryCode);
+            console.log('Country name:', countryName);
+
+            // Fetch news related to the country using the correct endpoint
+            const apiUrl = API.endsWith('/') ? API.slice(0, -1) : API;
+            const countryNews = await fetch(`${apiUrl}/news?country=${countryCode}`);
+            console.log('News API response status:', countryNews.status);
+            console.log('Full URL:', `${apiUrl}/news?country=${countryCode}`);
+
+            // If the response for fetching news is not okay, throw an error
+            if (!countryNews.ok) {
+                throw new Error(`Failed to fetch country news: ${countryNews.status}`);
+            }
+
+            // If the response is okay, parse the response body as JSON
+            const countryNewsData = await countryNews.json();
+            console.log('News data received:', countryNewsData);
+
+            // Update state variables with the fetched country information and news
+            setCountryInfo({ country: countryName, code: countryCode });
+            setCountryResources(countryNewsData);
+
+            // Set a flag to indicate that the modal should be open
+            setIsOpen(true);
+        } catch (error) {
+            // If any error occurs during the process, log the error
+            console.error('Error fetching country information:', error);
         }
+    };
 
-        // If the response is okay, parse the response body as JSON
-        const countryData = await response.json();
-        console.log(countryData);
 
-        // Fetch news related to the country using its name (assuming it's available in the countryData)
-        const countryNews = await fetch(`${API}/news?country=${countryData.country.toLowerCase().slice(0,2)}`);
-
-        // If the response for fetching news is not okay, throw an error
-        if (!countryNews.ok) {
-            throw new Error('Failed to fetch country news');
-        }
-
-        // If the response is okay, parse the response body as JSON
-        const countryNewsData = await countryNews.json();
-        console.log(countryNewsData);
-
-        // Update state variables with the fetched country information and news
-        setCountryInfo(countryData);
-        setCountryResources(countryNewsData);
-
-        // Set a flag to indicate that the modal or some other component should be open to display the fetched data
-        setIsOpen(true);
-    } catch (error) {
-        // If any error occurs during the process, log the error
-        console.error('Error fetching country information:', error);
-    }
-};
 
     
     const handleCloseModal = () => {
@@ -161,7 +194,7 @@ return (
         </path>
         <path class="allPaths"
             d="M665.8 489.6l3.1 0.6 0.6-1.4-1-1.2 0.6-1.9 2.3 0.6 2.7-0.7 3.2 1.4 2.5 1.3 1.7-1.7 1.3 0.2 0.8 1.8 2.7-0.4 2.2-2.5 1.8-4.7 3.4-5.9 2-0.3 1.3 3.6 3 11.2 3.1 1.1 0.1 4.4-4.3 5.3 1.7 1.9 10.1 1 0.2 6.5 4.3-4.2 7.1 2.3 9.5 3.9 2.8 3.7-0.9 3.6 6.6-2 11 3.4 8.5-0.2 8.4 5.3 7.4 7.2 4.4 1.8 4.8 0.3 2.1 2 2 8.2 1.1 3.9-2.1 10.6-2.7 4.2-7.7 8.9-3.4 7.3-4 5.5-1.4 0.2-1.3 4.7 0.9 12-1.1 9.9-0.3 4.2-1.6 2.6-0.5 8.6-5.2 8.3-0.5 6.7-4.3 2.7-1.1 3.9-6 0-8.5 2.4-3.7 2.9-6 1.9-6.1 5.1-4.1 6.4-0.3 4.8 1.3 3.5-0.3 6.5-0.8 3.1-3.4 3.6-4.5 11.3-4 5-3.2 3.1-1.5 6.1-2.9 3.6-2.1-3.6 1.8-3.1-3.8-4.3-4.8-3.6-6.3-4.1-1.9 0.2-6.3-5-3.4 0.7 6-8.7 5.3-6.3 3.3-2.6 4.2-3.5-0.4-5.1-3.2-3.8-2.6 1.3 0.7-3.7 0.3-3.8-0.3-3.6-2.1-1.1-2 1-2.1-0.3-0.8-2.4-1.1-5.9-1.2-1.9-3.9-1.8-2.2 1.3-5.9-1.3-0.4-8.7-2-3.5 1.6-1.4-0.8-3.6 1.3-2.8 0.6-5.1-1.7-4-3.2-1.8-0.8-2.5 0.5-3.7-10.7-0.3-2.8-7.5 1.7-0.1-0.3-2.7-1.2-1.9-0.5-3.7-3.4-1.9-3.5 0-2.5-1.8-3.9-1.3-2.3-2.4-6.4-1.1-6.5-5.7 0.3-4.3-0.9-2.5 0.4-4.8-7.3 1.1-2.9 2.4-4.8 2.6-1.1 1.9-2.9 0.2-4.2-0.6-3.2 1.1-2.6-0.7-0.1-9.7-4.4 3.7-5-0.1-2.3-3.5-3.8-0.3 1-2.8-3.3-3.9-2.6-5.8 1.5-1.1-0.2-2.8 3.4-1.8-0.7-3.5 1.4-2.2 0.3-3 6.3-4.4 4.6-1.2 0.8-1 5.1 0.3 2.2-17.6 0.1-2.8-0.9-3.6-2.6-2.4 0.1-4.7 3.2-1 1.1 0.7 0.2-2.5-3.3-0.7 0-4 11 0.2 1.9-2.3 1.6 2.1 1 3.8 1.1-0.8 3.1 3.4 4.4-0.4 1.1-2 4.2-1.5 2.4-1.1 0.7-2.7 4.1-1.8-0.3-1.4-4.8-0.5-0.7-4.1 0.3-4.3-2.5-1.6 1.1-0.6 4.1 0.8 4.5 1.6 1.7-1.5 4.1-1 6.4-2.4 2.1-2.5-0.7-1.8 3-0.2 1.2 1.4-0.8 2.9 2 0.9 1.2 3-1.6 2.3-1 5.4 1.4 3.3 0.3 3 3.5 3 2.8 0.3 0.6-1.3 1.8-0.3 2.6-1.1 1.8-1.7 3.2 0.6 1.3-0.3z" 
-            id="11" onClick={handleClick}>
+            id="us" onClick={handleClick}>
                 
         </path>
         <path class="allPaths" d="M1633.1 472.8l2.2-2.4 4.6-3.6-0.1 3.2-0.1 4.1-2.7-0.2-1.1 2.2-2.8-3.3z" 
@@ -897,10 +930,10 @@ return (
             d="M946.9 263.7l-2.2 1.6-2.8-0.9-2.7 0.7 0.9-5-0.3-3.9-2.4-0.6-1.1-2.4 0.5-4.2 2.2-2.3 0.5-2.6 1.2-3.8 0-2.7-0.9-2.3-0.2-2.2 1.9-1.6 2.2-0.9 1.2 3.1 3 0 0.9-0.8 3.1 0.2 1.3 3.2-2.4 1.7-0.3 5-0.8 0.9-0.3 3.1-2.3 0.5 2 3.8-1.6 4.2 1.8 1.9-0.8 1.7-2 2.4 0.4 2.2z" 
             id="Portugal">
         </path>
-        <path class="allPaths" id="2" onClick={handleClick}
+        <path class="allPaths" id="5" onClick={handleClick}
             d="M 1689.5 177.4 1703.2 188.4 1694.3 186.4 1698 195.4 1707.6 201.8 1710.6 206.2 1704.1 202.4 1704.2 207.3 1699.5 202 1695.7 195.9 1690.1 189.2 1687.7 184.4 1681.3 176.2 1673.3 170.1 1666.5 161.7 1668.4 158.9 1664 156.1 1665.3 155.2 1670.2 159.2 1677.1 165.1 1682.3 171.2 1689.5 177.4 Z">
         </path>
-        <path class="allPaths" id="2" onClick={handleClick}
+        <path class="allPaths" id="5" onClick={handleClick}
             d="M 1094.6 155.4 1085.8 155.5 1079.9 154.8 1080.6 152.2 1086.9 150.2 1092 151.3 1094.2 152.2 1094 153.9 1094.6 155.4 Z">
         </path>
         <path class="allPaths" id="2" onClick={handleClick}

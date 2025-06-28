@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import WorldMap from "./Components/Worldmap";
-import GlobeCanvas from "./Components/Globe"; // Import the Globe component
 
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Register from "./Components/Register";
