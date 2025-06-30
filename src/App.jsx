@@ -34,9 +34,9 @@ function App() {
         toggleLogin={toggleLogin}
         setToggleLogin={setToggleLogin}
       />
-      <button onClick={handleViewSwitch} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>
+      {/* <button onClick={handleViewSwitch} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>
         Switch to {is3DView ? "2D" : "3D"} View
-      </button> {/* Button to switch views */}
+      </button> Button to switch views */}
       
       <Routes>
         <Route path="/" element={<LandingPage />} />

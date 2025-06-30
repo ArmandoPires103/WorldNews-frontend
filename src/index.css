@@ -1,6 +1,15 @@
 
-/* Import only landing page CSS for testing */
+/* Import all CSS files */
+@import './Components/css/variables.css';
+@import './Components/css/globals.css';
 @import './Components/css/LandingPage.css';
+@import './Components/css/animations.css';
+@import './Components/css/map.css';
+@import './Components/css/legacy.css';
+
+/* Import component-specific CSS */
+@import './Components/css/Modal.css';
+@import './Components/css/NavBar.css';
 
 @tailwind base;
 @tailwind components;
