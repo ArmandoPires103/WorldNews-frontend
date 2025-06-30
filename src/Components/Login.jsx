@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../Components/Login.css"
+import "../Components/css/NavBar.css"
 
 const URL = import.meta.env.VITE_BASE_URL;
 

@@ -1,11 +1,14 @@
+
 import { useEffect, useState } from "react";
-import "./NavBar.css"
 import { Link } from "react-router-dom";
+import { Menu, MapPin, Heart, LogIn, LogOut } from "lucide-react";
+import "../Components/css/NavBar.css";
 
 const URL = import.meta.env.VITE_BASE_URL;
 
 const NavBar = ({ toggleLogin, handleLogout }) => {
   const [user, setUser] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!toggleLogin) setUser(null);
@@ -27,28 +30,87 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
     }
   }, [toggleLogin]);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleAuthClick = () => {
+    if (user) {
+      handleLogout();
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
-<nav className="nav__content">
-      <div className="logo"><Link to="/">GlobalEcho</Link></div>
-      <label htmlFor="check" className="checkbox">
-        <i className="ri-menu-line"></i>
-      </label>
-      <input type="checkbox" name="check" id="check" />
-      <ul>
-        <li><Link to="/map">Map</Link></li>
-        <li><Link to="/favorites">Favorites</Link></li>
-        { !user ? (
-          <li>
-            <Link to="/login">Log In</Link>
-          </li>
-        ) : (
-          <li>
-            <Link to="/login">Log Out</Link>
-          </li>
-        )}
-      </ul>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <div className="navbar-content">
+          <div className="navbar-logo">
+            <Link to="/">
+              GlobalEcho
+            </Link>
+          </div>
+
+          <div className="navbar-desktop">
+            <div className="navbar-desktop-content">
+              <Link to="/map" className="navbar-link">
+                <MapPin size={18} />
+                Map
+              </Link>
+              <Link to="/favorites" className="navbar-link">
+                <Heart size={18} />
+                Favorites
+              </Link>
+              {!user ? (
+                <Link to="/login" className="navbar-auth-btn navbar-login-btn">
+                  <LogIn size={18} />
+                  Log In
+                </Link>
+              ) : (
+                <button onClick={handleAuthClick} className="navbar-auth-btn navbar-logout-btn">
+                  <LogOut size={18} />
+                  Log Out
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="navbar-mobile-btn">
+            <button onClick={toggleMenu}>
+              <Menu size={24} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div className="navbar-mobile-menu">
+          <div className="navbar-mobile-content">
+            <Link to="/map" onClick={() => setIsMenuOpen(false)} className="navbar-mobile-link">
+              <MapPin size={20} />
+              Map
+            </Link>
+            <Link to="/favorites" onClick={() => setIsMenuOpen(false)} className="navbar-mobile-link">
+              <Heart size={20} />
+              Favorites
+            </Link>
+            {!user ? (
+              <Link to="/login" onClick={() => setIsMenuOpen(false)} className="navbar-mobile-auth-btn navbar-mobile-login-btn">
+                <LogIn size={20} />
+                Log In
+              </Link>
+            ) : (
+              <button onClick={handleAuthClick} className="navbar-mobile-auth-btn navbar-mobile-logout-btn">
+                <LogOut size={20} />
+                Log Out
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
 
 export default NavBar;
+

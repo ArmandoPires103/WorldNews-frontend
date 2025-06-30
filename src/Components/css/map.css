@@ -1,0 +1,65 @@
+
+/* SVG Map Duolingo-style enhancements */
+
+.timeCont {
+  margin-top: 20px;
+  background: var(--duolingo-light-gray);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 3px solid var(--duolingo-green);
+}
+
+#allSvg {
+  border-radius: 15px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+#allSvg:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.1);
+}
+
+svg path {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.allPaths {
+  fill: var(--duolingo-gray);
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.allPaths:hover {
+  fill: var(--duolingo-green);
+  stroke: var(--duolingo-dark-green);
+  stroke-width: 2.5;
+  cursor: pointer;
+  transform: scale(1.05);
+  transform-origin: center;
+  filter: drop-shadow(0 8px 16px rgba(88, 204, 2, 0.3));
+  animation: bounce 0.6s ease;
+}
+
+.allPaths:active {
+  fill: var(--duolingo-yellow);
+  stroke: var(--duolingo-orange);
+  transform: scale(0.98);
+  filter: drop-shadow(0 4px 8px rgba(255, 200, 0, 0.4));
+}
+
+.allPaths.selected {
+  fill: var(--duolingo-blue);
+  stroke: var(--duolingo-dark-green);
+  stroke-width: 3;
+  animation: pulse 2s infinite;
+}

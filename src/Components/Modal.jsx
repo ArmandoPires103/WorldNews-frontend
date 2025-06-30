@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Components/Modal.css';
+import '../Components/css/Modal.css';
 
 const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
   const handleCloseModal = () => {

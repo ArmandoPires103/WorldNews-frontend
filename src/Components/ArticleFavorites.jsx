@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EditFavorite from './EditFavorite';
-import "../Components/ArticleFavorites.css"
+import "../Components/css/ArticleFavorites.css"
 
 const ArticleFavorites = () => {
     const API = import.meta.env.VITE_BASE_URL;
