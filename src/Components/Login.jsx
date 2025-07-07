@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../Components/css/NavBar.css"
+import "../Components/css/Login.css"
 
-const URL = import.meta.env.VITE_BASE_URL;
+const URL = import.meta.env.VITE_BASE_URL?.replace(/\/$/, '') || 'http://localhost:3003';
 
 const Login = ({ setToggleLogin }) => {
   const [user, setUser] = useState({ username: "", password: "" });
@@ -11,41 +12,43 @@ const Login = ({ setToggleLogin }) => {
   function handleChange(event) {
     setUser({ ...user, [event.target.id]: event.target.value });
   }
-  // This function is being used in two places. It can be extracted to a helpers.js file
 
   async function postFetch(user) {
+    console.log('Attempting to login with URL:', `${URL}/api/auth/login`);
+    console.log('User data:', { username: user.username });
+
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(user),
     };
 
     try {
       const res = await fetch(`${URL}/api/auth/login`, options);
+      console.log('Response status:', res.status);
+      
       const data = await res.json();
 
       if (!res.ok) {
         alert("Login failed");
         setUser({ username: "", password: "" });
-        throw new Error("Registration failed");
+        throw new Error("Login failed");
       }
 
       if (data.token) {
         localStorage.setItem("token", data.token);
-        await setToggleLogin(true);
-        navigate("/map");
+        setToggleLogin(true);
+        navigate("/home");
       } else {
         console.log("JWT Login Failed");
       }
     } catch (error) {
-      console.error("Error during registration:", error);
+      console.error("Error during login:", error);
     }
   }
 
-  // Login Function
   async function handleSubmit(e) {
     e.preventDefault();
     if (!user.username || !user.password) {
@@ -55,58 +58,65 @@ const Login = ({ setToggleLogin }) => {
     postFetch(user);
   }
 
-  //Demo User Login Function
   async function handleDemoSignIn(e) {
     e.preventDefault();
-    const user = { username: "demo", password: "password" };
-    postFetch(user);
+    const demoUser = { username: "demo", password: "password" };
+    postFetch(demoUser);
   }
 
   return (
-    <div className="login-body">
-    <div className="wrapper">
-      <h1>Login</h1>
-      <br />
-      <button onClick={handleDemoSignIn} class="btn">Demo User</button>
-      <br />
-      <form onSubmit={handleSubmit}>
-        <div className="input-box">
-        <label htmlFor="username">
-          <input
-            id="username"
-            value={user.username}
-            type="text"
-            placeholder="username"
-            autoComplete="username"
-            onChange={handleChange}
-          />
-        </label>
+    <div className="auth-body">
+      <div className="auth-wrapper">
+        <h1>Login</h1>
+        
+        <button 
+          onClick={handleDemoSignIn} 
+          className="demo-btn"
+        >
+          Demo User
+        </button>
+        
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="input-box">
+            <input
+              id="username"
+              value={user.username}
+              type="text"
+              placeholder="Enter username"
+              autoComplete="username"
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="input-box">
+            <input
+              id="password"
+              value={user.password}
+              type="password"
+              placeholder="Enter password"
+              onChange={handleChange}
+              autoComplete="current-password"
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            className="auth-btn"
+          >
+            Submit
+          </button>
+        </form>
+        
+        <div className="auth-link">
+          <p>
+            No Account? <Link to="/register">Register</Link>
+          </p>
         </div>
-        <br />
-        <div className="input-box">
-        <label htmlFor="password">
-          <input
-            id="password"
-            value={user.password}
-            type="password"
-            placeholder="password"
-            onChange={handleChange}
-            autoComplete="current-password"
-          />
-        </label>
-        </div>
-        <br />
-        <button type="submit" class="btn">Submit</button>
-      </form>
-      <br />
-      <div className="register-link">
-      <p>
-        No Account? <Link to="/register">Register</Link>
-      </p>
       </div>
-    </div>
     </div>
   );
 };
 
 export default Login;
+
+

@@ -1,7 +1,9 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "../Components/css/Login.css"
 
-const URL = import.meta.env.VITE_BASE_URL;
+const URL = import.meta.env.VITE_BASE_URL?.replace(/\/$/, '') || 'http://localhost:3003';
 
 const Register = ({ setToggleLogin }) => {
   const navigate = useNavigate();
@@ -14,88 +16,98 @@ const Register = ({ setToggleLogin }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    console.log('Attempting to register with URL:', `${URL}/api/auth/register`);
+    console.log('User data:', { username: user.username, email: user.email });
+
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(user),
     };
 
     try {
       const res = await fetch(`${URL}/api/auth/register`, options);
+      console.log('Response status:', res.status);
 
-      if (!res.ok) throw new Error("Registration failed");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ message: 'Registration failed' }));
+        console.log('Error response:', errorData);
+        alert(errorData.message || "Registration failed");
+        throw new Error(errorData.message || "Registration failed");
+      }
+      
       const data = await res.json();
+      console.log('Registration successful:', data);
 
       if (data.token) {
-        // in case there is an old token in the browser, remove it
         localStorage.removeItem("token");
-        // set the new user's JWT token in the browser
         localStorage.setItem("token", data.token);
         setToggleLogin(true);
-        navigate("/dashboard");
+        navigate("/home");
       }
     } catch (error) {
       console.error("Error during registration:", error);
     }
   }
 
-  // USE THIS FORM TO BUILD OUT YOUR FORM PROPERLY BY ADDING LABELS AND INPUTS AS WELL AS WHATEVER CSS FRAMEWORK YOU MAY USE OR VANILLA CSS. THIS IS JUST A BOILERPLATE CODE
-
   return (
-    <div className='login-body'>
-        <div className='wrapper'>
-      <h1>Register</h1>
-      <br />
-      <form onSubmit={handleSubmit}>
-      <div className='input-box'>
-        <label htmlFor="username">
-          <input
-            id="username"
-            value={user.username}
-            type="text"
-            placeholder="username"
-            onChange={handleChange}
-            autoComplete="username"
-          />
-        </label>
+    <div className="auth-body">
+      <div className="auth-wrapper">
+        <h1>Register</h1>
+        
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="input-box">
+            <input
+              id="username"
+              value={user.username}
+              type="text"
+              placeholder="Enter username"
+              onChange={handleChange}
+              autoComplete="username"
+              required
+            />
+          </div>
+          
+          <div className="input-box">
+            <input
+              id="email"
+              value={user.email}
+              type="email"
+              placeholder="Enter email"
+              onChange={handleChange}
+              autoComplete="email"
+              required
+            />
+          </div>
+          
+          <div className="input-box">
+            <input
+              id="password"
+              value={user.password}
+              type="password"
+              placeholder="Enter password"
+              onChange={handleChange}
+              autoComplete="current-password"
+              required
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            className="auth-btn"
+          >
+            Submit
+          </button>
+        </form>
+        
+        <div className="auth-link">
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
         </div>
-        <br />
-        <div className='input-box'>
-        <label htmlFor="email">
-          <input
-            id="email"
-            value={user.email}
-            type="email"
-            placeholder="email"
-            onChange={handleChange}
-            autoComplete="email"
-          />
-        </label>
-        </div>
-        <br />
-        <div className='input-box'>
-        <label htmlFor="password">
-          <input
-            id="password"
-            value={user.password}
-            type="password"
-            placeholder="password"
-            onChange={handleChange}
-            autoComplete="current-password"
-          />
-        </label>
-        </div>
-        <br />
-        <button type="submit" class="btn">Submit</button>
-        <br />
-        <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-      </form>
-    </div>
+      </div>
     </div>
   );
 };

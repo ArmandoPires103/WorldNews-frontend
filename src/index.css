@@ -10,6 +10,8 @@
 /* Import component-specific CSS */
 @import './Components/css/Modal.css';
 @import './Components/css/NavBar.css';
+@import './Components/css/Login.css';
+
 
 @tailwind base;
 @tailwind components;

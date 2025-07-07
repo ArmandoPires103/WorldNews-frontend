@@ -1,10 +1,10 @@
 /* SVG Map with consistent color scheme */
 
 .timeCont {
-  margin-top: 100px; /* Add space for fixed navbar */
+  margin-top: 90px; /* Add space for fixed navbar */
   background: #f8fafc;
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 40px;
+  padding: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   /* Removed blue border */
 }
