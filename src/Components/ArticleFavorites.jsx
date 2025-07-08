@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import EditFavorite from './EditFavorite';
-import "../Components/css/ArticleFavorites.css"
+import '../Components/css/ArticleFavorites.css';
 
 const ArticleFavorites = () => {
   const API = import.meta.env.VITE_BASE_URL?.replace(/\/$/, '') || 'http://localhost:3003';
@@ -49,45 +49,59 @@ const ArticleFavorites = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-64">
-        <div className="text-lg">Loading favorites...</div>
+      <div className="favorites-container">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <div className="loading-text">Loading your favorites...</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6">Favorite Articles</h2>
+    <div className="favorites-container">
+      <div className="favorites-header">
+        {/* <h1 className="favorites-title">Your Favorite Articles</h1> */}
+        <p className="favorites-subtitle">
+          {favorites.length > 0 
+            ? `${favorites.length} article${favorites.length !== 1 ? 's' : ''} saved`
+            : 'Start building your collection'
+          }
+        </p>
+      </div>
       
       {favorites.length === 0 ? (
-        <div className="text-center py-8">
-          <p className="text-gray-500">No favorite articles yet. Start adding some!</p>
+        <div className="empty-state">
+          <div className="empty-state-icon">📚</div>
+          <h2 className="empty-state-title">No favorites yet</h2>
+          <p className="empty-state-description">
+            Start exploring the world map and save interesting articles to build your personal collection.
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="favorites-grid">
           {favorites.map((favorite) => (
-            <div key={favorite.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={favorite.id} className="favorite-card">
               {favorite.url_to_image && (
                 <img 
                   src={favorite.url_to_image} 
                   alt={favorite.title}
-                  className="w-full h-48 object-cover"
+                  className="favorite-card-image"
                 />
               )}
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">
+              <div className="favorite-card-content">
+                <h3 className="favorite-card-title">
                   <a 
                     href={favorite.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="hover:text-blue-600 transition-colors"
                   >
                     {favorite.title}
                   </a>
                 </h3>
-                <hr className="mb-4" />
-                <p className="text-gray-600 mb-4">
-                  Memo: {favorite.description}
+                <div className="favorite-card-divider"></div>
+                <p className="favorite-card-memo">
+                  <strong>Memo:</strong> {favorite.description}
                 </p>
                 <EditFavorite 
                   favorite={favorite} 
@@ -104,5 +118,3 @@ const ArticleFavorites = () => {
 };
 
 export default ArticleFavorites;
-
-
