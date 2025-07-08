@@ -65,10 +65,10 @@ const LandingPage = () => {
               Explore World Map
               <ArrowRight className="h-5 w-5" />
             </Link>
-            <Link to="/favorites" className="secondary-button">
+            {/* <Link to="/favorites" className="secondary-button">
               <Heart className="h-5 w-5" />
               My Favorites
-            </Link>
+            </Link> */}
           </div>
 
           {/* Feature Cards */}
