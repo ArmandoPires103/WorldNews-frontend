@@ -11,7 +11,10 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!toggleLogin) setUser(null);
+        if (!toggleLogin) {
+      setUser(null);
+      return;
+    }
 
     if (toggleLogin) {
       const token = localStorage.getItem("token");
@@ -35,7 +38,7 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
   };
 
   const handleAuthClick = () => {
-    if (user) {
+     if (toggleLogin) {
       handleLogout();
     }
     setIsMenuOpen(false);
@@ -61,7 +64,7 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
                 <Heart size={18} />
                 Favorites
               </Link>
-              {!user ? (
+              {!toggleLogin ? (
                 <Link to="/login" className="navbar-auth-btn navbar-login-btn">
                   <LogIn size={18} />
                   Log In
@@ -94,7 +97,7 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
               <Heart size={20} />
               Favorites
             </Link>
-            {!user ? (
+            {!toggleLogin ? (
               <Link to="/login" onClick={() => setIsMenuOpen(false)} className="navbar-mobile-auth-btn navbar-mobile-login-btn">
                 <LogIn size={20} />
                 Log In

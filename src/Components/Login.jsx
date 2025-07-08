@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../Components/css/Login.css"
+import "../Components/css/Login.css";
 
 const URL = import.meta.env.VITE_BASE_URL?.replace(/\/$/, '') || 'http://localhost:3003';
 
@@ -39,8 +39,8 @@ const Login = ({ setToggleLogin }) => {
 
       if (data.token) {
         localStorage.setItem("token", data.token);
-        setToggleLogin(true);
-        navigate("/home");
+        setToggleLogin(true); // Update the parent state immediately
+        navigate("/map");
       } else {
         console.log("JWT Login Failed");
       }
@@ -118,5 +118,3 @@ const Login = ({ setToggleLogin }) => {
 };
 
 export default Login;
-
-

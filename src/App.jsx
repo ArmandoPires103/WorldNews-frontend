@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import WorldMap from "./Components/Worldmap";
 
@@ -15,11 +15,26 @@ function App() {
   const [toggleLogin, setToggleLogin] = useState(false);
   const [is3DView, setIs3DView] = useState(false); // State to manage the view
 
+  // Listen for storage changes to update auth state
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToggleLogin(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check for token changes on focus (in case user logs in from another tab)
+    window.addEventListener('focus', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', handleStorageChange);
+    };
+  }, []);
+
   async function handleLogout() {
     localStorage.removeItem("token");
-
-    await setToggleLogin(false);
-
+    setToggleLogin(false);
     navigate("/login");
   }
 

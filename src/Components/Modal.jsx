@@ -1,11 +1,60 @@
+
 import React from 'react';
 import '../Components/css/Modal.css';
 
 const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
+  const API = import.meta.env.VITE_BASE_URL?.replace(/\/$/, '') || 'http://localhost:3003';
+
   const handleCloseModal = () => {
     onClose();
   };
 
+  const handleSaveArticle = async (article) => {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      alert('Please login to save articles');
+      return;
+    }
+
+    const favoriteData = {
+      title: article.title,
+      url: article.link,
+      url_to_image: article.image_url || '',
+      description: article.description || ''
+    };
+
+    try {
+      console.log('Saving article with URL:', `${API}/news/favorites`);
+      console.log('Article data:', favoriteData);
+      
+      const response = await fetch(`${API}/news/favorites`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(favoriteData)
+      });
+
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server error:', errorText);
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Save successful:', result);
+      alert('Article saved to favorites!');
+    } catch (error) {
+      console.error('Error saving article:', error);
+      alert(`Failed to save article: ${error.message}`);
+    }
+  };
+
+  // ... keep existing code (if (!isOpen) return null and the rest of the component)
   if (!isOpen) return null;
 
   return (
@@ -61,15 +110,23 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
                 </p>
               )}
               
-              {/* CTA Button - Duolingo style */}
-              <a 
-                href={article.link} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="news-button"
-              >
-                Read Article
-              </a>
+              {/* Buttons container */}
+              <div className="news-buttons">
+                <a 
+                  href={article.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="news-button"
+                >
+                  Read Article
+                </a>
+                <button 
+                  onClick={() => handleSaveArticle(article)}
+                  className="save-button"
+                >
+                  Save Article
+                </button>
+              </div>
             </div>
           ))}
           
@@ -87,4 +144,3 @@ const Modal = ({ isOpen, onClose, countryInfo, countryResources }) => {
 };
 
 export default Modal;
-
